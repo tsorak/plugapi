@@ -1,18 +1,16 @@
-defmodule Plugapi do
-  @moduledoc """
-  Documentation for `Plugapi`.
-  """
+defmodule Plugapi.Application do
+  use Application
+  require Logger
 
-  @doc """
-  Hello world.
+  def start(_type, _args) do
+    children = [
+      {Plug.Cowboy, scheme: :http, plug: Plugapi.RootPlug, options: [port: 8080]}
+    ]
 
-  ## Examples
+    opts = [strategy: :one_for_one, name: Plugapi.Supervisor]
 
-      iex> Plugapi.hello()
-      :world
+    Logger.info("Starting application...")
 
-  """
-  def hello do
-    :world
+    Supervisor.start_link(children, opts)
   end
 end
