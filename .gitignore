@@ -24,3 +24,6 @@ plugapi-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Ignore cache
+priv/static/*.js

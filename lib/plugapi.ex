@@ -3,6 +3,8 @@ defmodule Plugapi.Application do
   require Logger
 
   def start(_type, _args) do
+    Plugapi.AssetsCacher.init()
+
     children = [
       {Plug.Cowboy, scheme: :http, plug: Plugapi.Router, options: [port: 8080]}
     ]
