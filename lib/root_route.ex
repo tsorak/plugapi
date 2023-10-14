@@ -5,7 +5,7 @@ defmodule Plugapi.RootRouter do
   plug(:dispatch)
 
   get "/" do
-    send_resp(conn, 200, "Hello World!")
+    send_file(conn, 200, "priv/static/index.html")
   end
 
   match _ do
