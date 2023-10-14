@@ -1,14 +1,14 @@
-defmodule Plugapi.RootPlug do
-  import Plug.Conn
-  require Logger
+defmodule Plugapi.RootRouter do
+  use Plug.Router
 
-  def init(options), do: options
+  plug(:match)
+  plug(:dispatch)
 
-  def call(conn, _opts) do
-    Logger.info("Request: #{inspect(conn)}")
+  get "/" do
+    send_resp(conn, 200, "Hello World!")
+  end
 
-    conn
-    |> put_resp_content_type("text/plain")
-    |> send_resp(200, "Hello World!\n")
+  match _ do
+    send_resp(conn, 404, "Not found")
   end
 end

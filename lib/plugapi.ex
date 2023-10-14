@@ -4,7 +4,7 @@ defmodule Plugapi.Application do
 
   def start(_type, _args) do
     children = [
-      {Plug.Cowboy, scheme: :http, plug: Plugapi.RootPlug, options: [port: 8080]}
+      {Plug.Cowboy, scheme: :http, plug: Plugapi.Router, options: [port: 8080]}
     ]
 
     opts = [strategy: :one_for_one, name: Plugapi.Supervisor]
