@@ -1,9 +1,15 @@
 defmodule Plugapi.AssetsCacher do
+  use GenServer
   require Logger
 
-  def init do
+  def init(_arg) do
     Logger.info("Starting AssetsCacher...")
+    {:ok, :ok}
+  end
+
+  def start_link(_arg) do
     cache_htmx()
+    GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
   def cache_htmx do

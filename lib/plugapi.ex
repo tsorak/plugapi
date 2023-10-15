@@ -3,10 +3,9 @@ defmodule Plugapi.Application do
   require Logger
 
   def start(_type, _args) do
-    Plugapi.AssetsCacher.init()
-
     children = [
-      {Plug.Cowboy, scheme: :http, plug: Plugapi.Router, options: [port: 8080]}
+      {Plug.Cowboy, scheme: :http, plug: Plugapi.Router, options: [port: 8080]},
+      Plugapi.AssetsCacher
     ]
 
     opts = [strategy: :one_for_one, name: Plugapi.Supervisor]
