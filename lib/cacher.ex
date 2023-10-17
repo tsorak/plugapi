@@ -15,6 +15,7 @@ defmodule Plugapi.AssetsCacher do
   def cache_htmx do
     Logger.info("Caching HTMX...")
     cache("https://unpkg.com/htmx.org@1.9.6/dist/htmx.min.js", "htmx.js")
+    cache("https://unpkg.com/htmx.org@1.9.6/dist/ext/json-enc.js", "htmx-json-enc.js")
   end
 
   defp cache(url, save_name) do
