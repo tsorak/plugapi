@@ -8,6 +8,9 @@
     <title>HTMX Elixir</title>
   </head>
   <body>
-    <div hx-get="/htmx" hx-trigger="load" />
+    <form hx-post="/htmx/todo" hx-ext="json-enc" hx-swap="afterend">
+      <input type="text" name="name" />
+      <input type="submit" value="Submit" />
+    </form>
   </body>
 </html>
