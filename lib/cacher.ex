@@ -1,26 +1,35 @@
 defmodule Plugapi.AssetsCacher do
-  use GenServer
   require Logger
 
-  def init(_arg) do
+  def start(_opts) do
     Logger.info("Starting AssetsCacher...")
-    {:ok, :ok}
-  end
-
-  def start_link(_arg) do
     cache_htmx()
-    GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
   def cache_htmx do
     Logger.info("Caching HTMX...")
-    cache("https://unpkg.com/htmx.org@1.9.6/dist/htmx.min.js", "htmx.js")
-    cache("https://unpkg.com/htmx.org@1.9.6/dist/ext/json-enc.js", "htmx-json-enc.js")
+
+    htmx_cache_result = cache("https://unpkg.com/htmx.org@1.9.6/dist/htmx.min.js", "htmx.js")
+
+    htmx_json_enc_cache_result =
+      cache("https://unpkg.com/htmx.org@1.9.6/dist/ext/json-enc.js", "htmx-json-enc.js")
+
+    Enum.all?([htmx_cache_result, htmx_json_enc_cache_result], fn {result, _} -> result == :ok end)
+    |> if do
+      :ok
+    else
+      :error
+    end
   end
 
   defp cache(url, save_name) do
-    {_, script_data} = fetch_script(url)
-    write_file(script_data, save_name)
+    {fetch_result, script_data} = fetch_script(url)
+
+    if fetch_result == :error do
+      {:error, :fetch_error}
+    else
+      write_file(script_data, save_name)
+    end
   end
 
   defp fetch_script(url) do
