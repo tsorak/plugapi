@@ -5,6 +5,14 @@ defmodule Plugapi.HtmxRouter do
   plug(:match)
   plug(:dispatch)
 
+  get "/todo" do
+    {:ok, body} =
+      KV.Todos.get_all()
+      |> Jason.encode()
+
+    send_resp(conn, 200, body)
+  end
+
   EEx.function_from_file(:defp, :todo_created, "lib/templates/todo_created.eex", [:todo_name])
 
   post "/todo" do
