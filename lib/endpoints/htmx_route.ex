@@ -43,6 +43,7 @@ defmodule Plugapi.HtmxRouter do
             send_resp(conn, 400, "Name is required")
 
           true ->
+            KV.Todos.create(%Todo{description: name})
             send_resp(conn, 200, todo_created(name))
         end
 
