@@ -38,25 +38,21 @@ defmodule Plugapi.Route.Htmx do
     #     send_resp(conn, 200, "Todo created")
     # end
 
-    case content_type do
-      "application/json" ->
-        {:ok, body, conn} = read_body(conn)
+    if content_type == "application/json" do
+      {:ok, body, conn} = read_body(conn)
 
-        name =
-          Jason.decode!(body)
-          |> Map.get("name")
+      name =
+        Jason.decode!(body)
+        |> Map.get("name")
 
-        cond do
-          is_nil(name) ->
-            send_resp(conn, 400, "Name is required")
-
-          true ->
-            KV.Registry.create(%Todo{description: name})
-            send_resp(conn, 200, todo_created(name))
-        end
-
-      _ ->
-        send_resp(conn, 400, "Content type not supported")
+      if not is_nil(name) do
+        KV.Registry.create(%Todo{description: name})
+        send_resp(conn, 200, todo_created(name))
+      else
+        send_resp(conn, 400, "Name is required")
+      end
+    else
+      send_resp(conn, 400, "Content type not supported")
     end
   end
 
