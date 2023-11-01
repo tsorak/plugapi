@@ -1,4 +1,4 @@
-defmodule Plugapi.HtmxRouter do
+defmodule Plugapi.Route.Htmx do
   use Plug.Router
   require EEx
 
@@ -7,7 +7,7 @@ defmodule Plugapi.HtmxRouter do
 
   get "/todo" do
     {:ok, body} =
-      KV.Todos.get_all()
+      KV.Registry.get_all()
       |> Jason.encode()
 
     send_resp(conn, 200, body)
@@ -51,7 +51,7 @@ defmodule Plugapi.HtmxRouter do
             send_resp(conn, 400, "Name is required")
 
           true ->
-            KV.Todos.create(%Todo{description: name})
+            KV.Registry.create(%Todo{description: name})
             send_resp(conn, 200, todo_created(name))
         end
 

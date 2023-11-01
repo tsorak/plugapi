@@ -5,7 +5,7 @@ defmodule Plugapi.Router do
   plug(:match)
   plug(:dispatch)
 
-  forward("/htmx", to: Plugapi.HtmxRouter)
-  forward("/api", to: Plugapi.ApiRouter)
-  forward("/", to: Plugapi.RootRouter)
+  forward("/htmx", to: Plugapi.Route.Htmx)
+  forward("/api", to: Plugapi.Route.Api)
+  forward("/", to: Plugapi.Route.Root)
 end

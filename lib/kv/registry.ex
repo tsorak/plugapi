@@ -1,4 +1,4 @@
-defmodule KV.Todos do
+defmodule KV.Registry do
   use GenServer
 
   def start_link(_arg) do
@@ -12,6 +12,8 @@ defmodule KV.Todos do
   def get_all do
     GenServer.call(__MODULE__, :get_all)
   end
+
+  ###
 
   def init(initial_state) do
     {:ok, initial_state}

@@ -1,4 +1,4 @@
-defmodule Plugapi.RootRouter do
+defmodule Plugapi.Route.Root do
   use Plug.Router
 
   plug(:match)
