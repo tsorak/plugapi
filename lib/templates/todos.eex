@@ -1,0 +1,3 @@
+<%= for todo <- todos do %>
+  <p><%= todo %></p>
+<% end %>
