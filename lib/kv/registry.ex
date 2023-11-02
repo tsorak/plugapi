@@ -29,7 +29,6 @@ defmodule KV.Registry do
 
   def handle_cast({:create, todo}, todos) do
     todo_id = Ecto.UUID.generate()
-    IO.inspect(todo)
     {:noreply, Map.put(todos, todo_id, todo)}
   end
 end
