@@ -6,6 +6,6 @@ defmodule Plugapi.Router do
   plug(:dispatch)
 
   forward("/htmx", to: Plugapi.Route.Htmx)
-  forward("/api", to: Plugapi.Route.Api)
+  forward("/json", to: Plugapi.Route.Json)
   forward("/", to: Plugapi.Route.Root)
 end
