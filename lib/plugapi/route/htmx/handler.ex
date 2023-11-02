@@ -5,12 +5,12 @@ defmodule Plugapi.Route.Htmx do
   plug(:match)
   plug(:dispatch)
 
-  get "/todo" do
-    {:ok, body} =
-      KV.Registry.get_all()
-      |> Jason.encode()
+  EEx.function_from_file(:defp, :todos, "lib/templates/todos.eex", [:todos])
 
-    send_resp(conn, 200, body)
+  get "/todo" do
+    todos = KV.Registry.get_all()
+
+    send_resp(conn, 200, todos(todos))
   end
 
   EEx.function_from_file(:defp, :todo_created, "lib/templates/todo_created.eex", [:todo_name])

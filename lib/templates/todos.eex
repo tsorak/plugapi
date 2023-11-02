@@ -1,3 +1,3 @@
 <%= for todo <- todos do %>
-  <p><%= todo %></p>
+  <p><%= todo.description %></p>
 <% end %>
