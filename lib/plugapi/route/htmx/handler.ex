@@ -18,26 +18,6 @@ defmodule Plugapi.Route.Htmx do
   post "/todo" do
     [content_type | _] = get_req_header(conn, "content-type")
 
-    # Early return attempt
-    # if content_type !== "application/json" do
-    #   send_resp(conn, 400, "Content type not supported")
-    #   halt(conn)
-    # end
-
-    # {:ok, body, conn} = read_body(conn)
-
-    # name =
-    #   Jason.decode!(body)
-    #   |> Map.get("name")
-
-    # cond do
-    #   is_nil(name) ->
-    #     send_resp(conn, 400, "Name is required")
-
-    #   true ->
-    #     send_resp(conn, 200, "Todo created")
-    # end
-
     if content_type == "application/json" do
       {:ok, body, conn} = read_body(conn)
 
