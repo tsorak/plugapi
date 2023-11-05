@@ -5,6 +5,6 @@ defmodule Plugapi.Plugs.PutHtmlContentType do
   def init(options), do: options
 
   def call(conn, _opts) do
-    conn |> put_resp_content_type("text/html")
+    conn |> put_resp_header("content-type", "text/html")
   end
 end

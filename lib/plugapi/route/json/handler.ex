@@ -21,6 +21,8 @@ defmodule Plugapi.Route.Json do
       KV.Registry.get_all()
       |> Jason.encode()
 
-    send_resp(conn, 200, todos)
+    conn
+    |> put_resp_header("content-type", "application/json")
+    |> send_resp(200, todos)
   end
 end
