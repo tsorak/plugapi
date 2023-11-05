@@ -12,7 +12,9 @@ defmodule Plugapi.Application do
 
     Logger.info("Starting application...")
 
-    _cache_result = Plugapi.AssetsCacher.start([])
+    Task.async(fn -> Plugapi.AssetsCacher.start([]) end)
+
+    Logger.info("Starting webserver...")
 
     Supervisor.start_link(children, opts)
   end
