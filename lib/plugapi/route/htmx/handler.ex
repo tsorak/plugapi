@@ -4,6 +4,16 @@ defmodule Plugapi.Route.Htmx do
   alias Plugapi.Templates
 
   plug(:match)
+
+  plug(Plug.Parsers,
+    parsers: [:json],
+    pass: ["application/json"],
+    json_decoder: Plugapi.SafeJsonDecoder
+  )
+
+  plug(Plugapi.Plugs.JsonValidator)
+  plug(Plugapi.Plugs.PutHtmlContentType)
+
   plug(:dispatch)
 
   get "/todo" do
@@ -16,11 +26,8 @@ defmodule Plugapi.Route.Htmx do
     [content_type | _] = get_req_header(conn, "content-type")
 
     if content_type == "application/json" do
-      {:ok, body, conn} = read_body(conn)
-
-      name =
-        Jason.decode!(body)
-        |> Map.get("name")
+      body = conn.body_params
+      name = body |> Map.get("name")
 
       if not is_nil(name) do
         KV.Registry.create(%Todo{description: name})

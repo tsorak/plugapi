@@ -4,6 +4,14 @@ defmodule Plugapi.Route.Json do
   plug(:match)
   plug(:dispatch)
 
+  plug(Plug.Parsers,
+    parsers: [:json],
+    pass: ["application/json"],
+    json_decoder: Plugapi.SafeJsonDecoder
+  )
+
+  plug(Plugapi.Plugs.JsonValidator)
+
   get "/" do
     send_resp(conn, 200, "Up - #{Mix.env()}")
   end
