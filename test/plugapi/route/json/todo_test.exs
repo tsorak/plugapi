@@ -17,5 +17,9 @@ defmodule Plugapi.Route.JsonTest do
     assert conn
            |> get_resp_header("content-type")
            |> List.first() == "application/json"
+
+    assert conn.resp_body
+           |> Jason.decode!()
+           |> Enum.all?(&struct(Todo, &1))
   end
 end
